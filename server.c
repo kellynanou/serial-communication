@@ -5,8 +5,84 @@
 #include <termios.h>
 #include <string.h>
 
-#define SERIAL_PORT "/dev/pts/3"
-#define BUFFER_SIZE 1024
+#define SERIAL_PORT "/dev/pts/5" // Adjust as needed
+#define BUFFER_SIZE 65536
+
+
+
+// typedef struct {
+//     int value;
+//     int min_value;
+//     int max_value;
+// } Register;
+
+// // Array to store registers
+// Register registers[10]; // Adjust the size as needed
+
+// // Function to initialize registers
+// void init_registers() {
+//     // Initialize registers with default values and ranges
+//     registers[0].value = 10;
+//     registers[0].min_value = 0;
+//     registers[0].max_value = 100;
+
+//     // ... Initialize other registers
+// }
+
+
+
+
+// Registers
+int reg1 = 1;
+int reg2 = 2;
+int N = 10;
+
+void process_command(char *command, char *response) {
+    // Clear the response buffer
+   // memset(response, 0, BUFFER_SIZE);
+
+    // Handle REG1 commands
+    
+    if(strcmp(command, "help") == 0){
+        sprintf(response,"\nAvailable Commands for the %d Registers are:\n---  AT+REG<N>: Read the Nth register's value\n---  AT+REG<N>=?: Read the list of all allowed values for the Nth register\n---  REG<N>=<int>: Write the provided integer to Nth register\n",N);
+    }else if (strcmp(command, "AT+REG1=?") == 0) {
+        sprintf(response, "0-16535\n");
+    } else if (strncmp(command, "AT+REG1=", 8) == 0) {
+        // Parse the integer value from the command
+        char *value_str = command + 8;
+        char *endptr;
+        int new_value = strtol(value_str, &endptr, 10);
+
+        if (*endptr == '\0' && new_value >= 0 && new_value <= 16535) { // Validate range and input
+            reg1 = new_value;
+            sprintf(response, "OK\n");
+        } else {
+            sprintf(response, "InvalidInput\n");
+        }
+    } else if (strcmp(command, "AT+REG1") == 0) {
+        sprintf(response, "%d\n", reg1);
+    }
+    // Handle REG2 commands
+    else if (strcmp(command, "AT+REG2=?") == 0) {
+        sprintf(response, "1|2|3\n");
+    } else if (strncmp(command, "AT+REG2=", 8) == 0) {
+        char *value_str = command + 8;
+        char *endptr;
+        int new_value = strtol(value_str, &endptr, 10);
+
+        if (*endptr == '\0' && (new_value == 1 || new_value == 2 || new_value == 3)) { // Validate discrete values
+            reg2 = new_value;
+            sprintf(response, "OK\n");
+        } else {
+            sprintf(response, "InvalidInput\n");
+        }
+    } else if (strcmp(command, "AT+REG2") == 0) {
+        sprintf(response, "%d\n", reg2);
+    } else {
+        // Invalid command
+        sprintf(response, "Invalid Command\n");
+    }
+}
 
 void configure_serial_port(int fd) {
     struct termios tty;
@@ -47,14 +123,25 @@ int main() {
     configure_serial_port(serial_fd);
 
     char buffer[BUFFER_SIZE];
+    char response[BUFFER_SIZE];
+
+    //init_registers();
+
     while (1) {
-        ssize_t n = read(serial_fd, buffer, sizeof(buffer) - 1);
+        // Clear buffers
+        memset(buffer, 0, BUFFER_SIZE);
+        memset(response, 0, BUFFER_SIZE);
+
+        // Read data from the serial port
+        ssize_t n = read(serial_fd, buffer, BUFFER_SIZE - 1);
         if (n > 0) {
-            buffer[n] = '\0';
+            buffer[n] = '\0'; // Null-terminate the input
             printf("Received: %s\n", buffer);
 
-            // Echo response
-            char response[] = "Message received\n";
+            // Process the command and prepare the response
+            process_command(buffer, response);
+
+            // Write the response back to the serial port
             write(serial_fd, response, strlen(response));
         }
     }

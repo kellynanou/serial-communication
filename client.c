@@ -5,7 +5,9 @@
 #include <termios.h>
 #include <string.h>
 
-#define SERIAL_PORT "/dev/pts/4"
+#define SERIAL_PORT "/dev/pts/6"
+#define BUFFER_SIZE 65536
+
 
 void configure_serial_port(int fd) {
     struct termios tty;
@@ -47,19 +49,33 @@ int i=0;
 	while(1){
 
 
-    char *message = "Hello, Server!\n";
-    write(serial_fd, message, strlen(message));
+char command[BUFFER_SIZE];
+        printf("Enter AT command: ");
+        fgets(command, BUFFER_SIZE, stdin);
+        if (strcmp(command, "quit\n") == 0) {
+            break;
+        }
 
-    char buffer[1024];
-    ssize_t n = read(serial_fd, buffer, sizeof(buffer) - 1);
-    if (n > 0) {
-        buffer[n] = '\0';
-        printf("Server response: %s %d times\n", buffer,i);
-	i++;    
-}
+        // Remove the newline character
+        command[strcspn(command, "\n")] = '\0';
 
+     if (write(serial_fd, command, strlen(command)) < 0) {
+            perror("send failed");
+            exit(EXIT_FAILURE);
+        }
+
+        char response[BUFFER_SIZE];
+
+        if (read(serial_fd,response, BUFFER_SIZE) < 0) {
+            perror("recv failed");
+            exit(EXIT_FAILURE);
+        }
+
+        printf("%s\n", response);
+    memset(response, 0, BUFFER_SIZE);
 
 }
     close(serial_fd);
     return EXIT_SUCCESS;
 }
+
