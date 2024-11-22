@@ -5,7 +5,6 @@
 #include <termios.h>
 #include <string.h>
 
-#define SERIAL_PORT "/dev/pts/6"
 #define BUFFER_SIZE 65536
 
 
@@ -37,10 +36,15 @@ void configure_serial_port(int fd) {
     }
 }
 
-int main() {
-int i=0;
-    int serial_fd = open(SERIAL_PORT, O_RDWR | O_NOCTTY | O_SYNC);
-    if (serial_fd < 0) {
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <serial_port>\n", argv[0]);
+        return 1;
+    }
+    const char *serial_port = argv[1];
+    printf("client running on port: %s\n", argv[1]);
+    int serial_fd = open(serial_port, O_RDWR | O_NOCTTY | O_SYNC);
+        if (serial_fd < 0) {
         perror("Open serial port");
         return EXIT_FAILURE;
     }
@@ -52,7 +56,7 @@ int i=0;
 char command[BUFFER_SIZE];
         printf("Enter AT command: ");
         fgets(command, BUFFER_SIZE, stdin);
-        if (strcmp(command, "quit\n") == 0) {
+        if ((strcmp(command, "quit\n") == 0)||(strcmp(command,"QUIT\n")==0) || (strcmp(command, "Q\n") == 0) ){
             break;
         }
 
