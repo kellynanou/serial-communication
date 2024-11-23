@@ -50,7 +50,7 @@ And in **this terminal** you type the commands.
 
 
 
-### Parametrization
+### Parameterization 
 You can change the Number of Regs (2-99) and the Number of the discrete Values by the **#define NUM_REGISTERS** and 
 **#define DISCRETE** in the server.c code before compiling the code.
 
