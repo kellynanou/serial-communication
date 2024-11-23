@@ -15,14 +15,11 @@ This system consists of two main components:
 - **Serial Communication**: Communication between the client and server occurs over a serial interface.
 
 
-## Installation
+## Instalation
+     git clone https://github.com/kellynanou/serial-communication.git
 
-1. Clone this repository:
-```bash
-    git clone https://github.com/kellynanou/serial-communication.git
-    exit
-
-## Compile and Build
+     
+### Compile and build
 
 1. ```bash
     cd serial-communication/
@@ -30,10 +27,26 @@ This system consists of two main components:
     cmake .
     make
 
-## Run
+#### Run
 
 1.  In a terminal
     ```bash 
     socat -d -d pty,raw,echo=0 pty,raw,echo=0
 to open the serial communication
+
+2. In a 2nd terminal 
+    ```bash
+    ./server /dev/pts/X
+where X is the first serial port that you can see in the 1st terminal    
+
+
+3. In a 3rd terminal
+    ```bash
+    ./client /dev/pts/Y
+where Y is the second serial port that you can see in the 1st terminal  
+
+
+
+
+
     
