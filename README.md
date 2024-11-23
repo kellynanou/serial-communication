@@ -45,7 +45,8 @@ where X is the first serial port that you can see in the 1st terminal
     ```bash
      cd serial-communication/
     ./client /dev/pts/Y
-where Y is the second serial port that you can see in the 1st terminal  
+where Y is the second serial port that you can see in the 1st terminal.
+And in this terminal you type the commands.
 
 
 
@@ -56,11 +57,3 @@ You alter the Number of Regs (2-99) and also the Number of the discrete Values b
 To remove the files that have been created at the end of the execution
 ```bash
      make cleanall
-
-
-
-
-
-
-
-    
