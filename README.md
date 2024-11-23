@@ -20,4 +20,19 @@ This system consists of two main components:
 1. Clone this repository:
 ```bash
     git clone https://github.com/kellynanou/serial-communication.git
-2. 
+
+## Compile and Build
+
+1. ```bash
+    cd serial-communication/
+1. ```bash
+    cmake .
+    make
+
+## Run
+
+1.  In a terminal
+    ```bash 
+    socat -d -d pty,raw,echo=0 pty,raw,echo=0
+to open the serial communication
+    
