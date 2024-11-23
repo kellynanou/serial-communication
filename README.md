@@ -46,14 +46,15 @@ where X is the first serial port that you can see in the 1st terminal
      cd serial-communication/
     ./client /dev/pts/Y
 where Y is the second serial port that you can see in the 1st terminal.
-And in this terminal you type the commands.
+And in **this terminal** you type the commands.
 
 
 
 ### Parametrization
-You alter the Number of Regs (2-99) and also the Number of the discrete Values by the #define in the server.c code before compiling the code.
+You can change the Number of Regs (2-99) and the Number of the discrete Values by the **#define NUM_REGISTERS** and 
+**#define DISCRETE** in the server.c code before compiling the code.
 
 ## Clean Up
-To remove the files that have been created at the end of the execution
+To remove the files that have been created, at the end of the execution run
 ```bash
-     make cleanall
+make cleanall
