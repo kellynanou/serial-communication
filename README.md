@@ -47,6 +47,13 @@ where Y is the second serial port that you can see in the 1st terminal
 
 
 
+#### Parametrization
+You alter the Number of Regs (2-99) and also the Number of the discrete Values by the #define in the server.c code before compiling the code.
+
+
+
+
+
 
 
     
