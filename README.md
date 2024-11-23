@@ -18,5 +18,5 @@ This system consists of two main components:
 ## Installation
 
 1. Clone this repository:
-
+    git clone [git@github.com:kellynanou/serial-communication.git]{https://github.com/kellynanou/serial-communication.git}
 2. 
