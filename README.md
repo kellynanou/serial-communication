@@ -36,12 +36,14 @@ to open the serial communication
 
 2. **In a 2nd terminal** 
     ```bash
+     cd serial-communication/
     ./server /dev/pts/X
 where X is the first serial port that you can see in the 1st terminal    
 
 
 3. **In a 3rd terminal**
     ```bash
+     cd serial-communication/
     ./client /dev/pts/Y
 where Y is the second serial port that you can see in the 1st terminal  
 
