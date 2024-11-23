@@ -19,3 +19,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Enable verbose build output
 set(CMAKE_VERBOSE_MAKEFILE ON)
+
+# Custom clean target
+add_custom_target(cleanall
+    COMMAND ${CMAKE_COMMAND} -E remove
+        ${CMAKE_CURRENT_SOURCE_DIR}/CMakeCache.txt
+        ${CMAKE_CURRENT_SOURCE_DIR}/cmake_install.cmake
+        ${CMAKE_CURRENT_SOURCE_DIR}/Makefile
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/server
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/client
+    COMMAND ${CMAKE_COMMAND} -E remove_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/CMakeFiles
+    COMMENT "Deleting all files and folders created by CMake and make..."
+)
