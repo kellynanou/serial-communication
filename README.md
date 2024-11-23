@@ -20,6 +20,7 @@ This system consists of two main components:
 1. Clone this repository:
 ```bash
     git clone https://github.com/kellynanou/serial-communication.git
+    exit
 
 ## Compile and Build
 
