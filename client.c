@@ -7,7 +7,6 @@
 
 #define BUFFER_SIZE 65536
 
-
 void configure_serial_port(int fd) {
     struct termios tty;
     memset(&tty, 0, sizeof(tty));
