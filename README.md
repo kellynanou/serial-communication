@@ -19,7 +19,7 @@ This system consists of two main components:
      git clone https://github.com/kellynanou/serial-communication.git
 
      
-### Compile and build
+## Compile and build
 
 1. ```bash
     cd serial-communication/
@@ -27,28 +27,33 @@ This system consists of two main components:
     cmake .
     make
 
-#### Run
+## Run
 
-1.  In a terminal
+1.  **In a terminal**
     ```bash 
     socat -d -d pty,raw,echo=0 pty,raw,echo=0
 to open the serial communication
 
-2. In a 2nd terminal 
+2. **In a 2nd terminal** 
     ```bash
     ./server /dev/pts/X
 where X is the first serial port that you can see in the 1st terminal    
 
 
-3. In a 3rd terminal
+3. **In a 3rd terminal**
     ```bash
     ./client /dev/pts/Y
 where Y is the second serial port that you can see in the 1st terminal  
 
 
 
-#### Parametrization
+### Parametrization
 You alter the Number of Regs (2-99) and also the Number of the discrete Values by the #define in the server.c code before compiling the code.
+
+## Clean Up
+To remove the files that have been created at the end of the execution
+```bash
+     make cleanall
 
 
 
